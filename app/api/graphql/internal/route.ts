@@ -1,5 +1,5 @@
+import schema from "@/app/graphql/schema";
 import { createYoga } from "graphql-yoga";
-import schema from "@/graphql/schema";
 
 const { handleRequest } = createYoga({
   schema: schema,

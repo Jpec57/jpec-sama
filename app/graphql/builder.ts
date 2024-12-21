@@ -1,21 +1,21 @@
 import SchemaBuilder from "@pothos/core";
 import RelayPlugin from "@pothos/plugin-relay";
-// import { Enums } from "./schema/enums/type";
-// import { Types } from "./schema/types/type";
-// import { Objects } from "./schema/objects/type";
+import { Enums } from "./schema/enums/_type";
+import { Objects } from "./schema/objects/_type";
 
 export type GraphQLContext = {
   request: Request;
+  viewer?: { id: string } | null;
 };
 
 const builder = new SchemaBuilder<{
   Context: GraphQLContext;
   // Inputs: {}
-  //   Objects: Objects & Types;
-  //   Interfaces: {
-  //     Node: { id: string };
-  //   };
-  //   Enums: Enums;
+  Objects: Objects;
+  Interfaces: {
+    Node: { id: string };
+  };
+  Enums: Enums;
   //   Scalars: {
   //     LocalDate: {
   //       Input: string | null;

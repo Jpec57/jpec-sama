@@ -47,7 +47,6 @@ export default function ReviewPage() {
             <Button
               type="submit"
               className="w-full "
-              // className="w-full bg-[#8e354a] hover:bg-[#b4555a] text-[#f7f3e9]"
             >
               回答を確認
             </Button>
@@ -68,7 +67,6 @@ export default function ReviewPage() {
                 setShowAnswer(false);
                 setUserAnswer("");
               }}
-              className="bg-[#8e354a] hover:bg-[#b4555a] text-[#f7f3e9]"
             >
               次のカード
             </Button>

@@ -2,7 +2,6 @@ import FlashcardGraph from "@/components/FlashcardGraph";
 import { Button } from "@/components/ui/button";
 import { getFlashcardReviewData } from "@/lib/mockData";
 import { createClient } from "@/utils/supabase/server";
-import { InfoIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 

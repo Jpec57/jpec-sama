@@ -1,8 +1,6 @@
 import builder from "../builder";
 import "./enums";
-// import "./types";
-import "./queries";
 import "./objects";
-// import "./scalars";
+import "./queries";
 
 export default builder.toSchema();
