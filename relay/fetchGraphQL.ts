@@ -1,9 +1,8 @@
 export const IS_SERVER = typeof window === typeof undefined;
 const GRAPHQL_HTTP_ENDPOINT = `http://localhost:3000/api/graphql/internal`;
-// const CACHE_TTL = 5 * 1000; // 5 seconds, to resolve preloaded results
+export const CACHE_TTL = 5 * 1000; // 5 seconds, to resolve preloaded results
 
-
-const fetchGraphQL = async (text: string, variables?: any) => {
+const fetchGraphQL = async (text: string, variables?: unknown) => {
   console.dir({ text, variables });
   const response = await fetch(GRAPHQL_HTTP_ENDPOINT, {
     method: "POST",
@@ -14,7 +13,7 @@ const fetchGraphQL = async (text: string, variables?: any) => {
     },
     body: JSON.stringify({
       query: text,
-      variables: null
+      variables: variables
     })
   });
   return await response.json();

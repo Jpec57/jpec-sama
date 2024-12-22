@@ -1,15 +1,18 @@
 "use client";
-import RelayEnvironment from "@/relay/RelayEnvironment";
 import { RelayEnvironmentProvider } from "react-relay";
 
 import ReviewPage from "@/components/review/ReviewPage";
+import { Suspense } from "react";
+import { relayEnvironment } from "@/relay/RelayEnvironment";
 
 const ReviewPageLayout = () => { 
     return (
-                    <RelayEnvironmentProvider environment={RelayEnvironment}>
+    <RelayEnvironmentProvider environment={relayEnvironment}>
+              <Suspense fallback={'Loading...'}>
 
-                        <ReviewPage />
-          </RelayEnvironmentProvider>
+            <ReviewPage />
+</Suspense>
+        </RelayEnvironmentProvider>
     )
 }
 export default ReviewPageLayout
