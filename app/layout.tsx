@@ -1,7 +1,5 @@
 import HeaderAuth from "@/components/header-auth";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
-import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import Link from "next/link";
 import "./globals.css";
@@ -17,11 +15,6 @@ export const metadata = {
   description: "The best flashcard app",
 };
 
-// const geistSans = Geist({
-//   display: "swap",
-//   subsets: ["latin"],
-// });
-
 
 const shipporiMincho = Shippori_Mincho({
   subsets: ["latin"],
@@ -35,6 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+
     <html lang="en" className={shipporiMincho.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
         <ThemeProvider
@@ -69,5 +63,6 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
+      
   );
 }

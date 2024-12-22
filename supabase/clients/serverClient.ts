@@ -1,9 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export const createClient = async () => {
+export const createClientFromCookies = async () => {
   const cookieStore = await cookies();
-
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -22,8 +21,8 @@ export const createClient = async () => {
             // This can be ignored if you have middleware refreshing
             // user sessions.
           }
-        },
-      },
-    },
+        }
+      }
+    }
   );
 };

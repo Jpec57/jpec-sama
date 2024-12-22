@@ -1,4 +1,4 @@
-import supabaseAdmin from "@/utils/supabase/supabaseAdmin";
+import supabaseAdmin from "@/supabase/supabaseAdmin";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 

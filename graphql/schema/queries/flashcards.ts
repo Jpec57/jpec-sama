@@ -1,4 +1,4 @@
-import supabaseAdmin from "@/utils/supabase/supabaseAdmin";
+import supabaseAdmin from "@/supabase/supabaseAdmin";
 import builder from "../../builder";
 import { MissingApiTokenError } from "../errors";
 import resolveConnection from "../../utils/resolveConnection";
@@ -13,12 +13,18 @@ builder.queryField("flashcards", (t) =>
         required: false,
         description: "Whether the sort is ascending or not.",
         defaultValue: false
+      }),
+      availableBefore: t.arg.string({
+        required: false,
+        description:
+          "Filter the cards not available for review before a given date."
       })
     },
     resolve: async (_, args, { viewer }) => {
-      if (viewer === null || viewer === undefined) {
-        throw MissingApiTokenError;
-      }
+      //TODO - remove this check
+      // if (viewer === null || viewer === undefined) {
+      //   throw MissingApiTokenError;
+      // }
       const countQuery = supabaseAdmin
         .from("flashcard")
         .select("id", { count: "exact" });
@@ -26,7 +32,10 @@ builder.queryField("flashcards", (t) =>
       const dataQuery = supabaseAdmin.from("flashcard").select("*");
 
       [countQuery, dataQuery].forEach((query) => {
-        query.eq("user_id", viewer.id);
+        // query.eq("user_id", viewer.id);
+        if (args.availableBefore) {
+          query.lte("next_available_at", args.availableBefore);
+        }
         query.order("created_at", { ascending: args.ascending ?? false });
       });
       const { count } = await countQuery;

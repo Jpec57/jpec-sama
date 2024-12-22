@@ -1,8 +1,8 @@
 import { Flashcard, FlashcardAnswer } from "@/lib/type";
 import builder from "../../builder";
 import { FlashcardTypeEnumType } from "../enums/FlashcardType";
-import supabaseAdmin from "@/utils/supabase/supabaseAdmin";
-import debugAndThrowError from "@/utils/supabase/debugAndThrowError";
+import supabaseAdmin from "@/supabase/supabaseAdmin";
+import debugAndThrowError from "@/supabase/debugAndThrowError";
 
 builder.node("FlashcardAnswer", {
   description: "A Flashcard answer.",

@@ -1,4 +1,5 @@
-import schema from "@/app/graphql/schema";
+import schema from "@/graphql/schema";
+import getViewerFromCookies from "@/supabase/getViewerFromRequest";
 import { createYoga } from "graphql-yoga";
 
 const { handleRequest } = createYoga({
@@ -6,9 +7,13 @@ const { handleRequest } = createYoga({
   graphqlEndpoint: "/api/graphql/internal",
   graphiql: true,
   context: async ({ request }) => {
+    const supabaseUser = await getViewerFromCookies();
+    if (supabaseUser) {
+      return { request, viewer: supabaseUser };
+    }
     const auth = request.headers.get("Authorization");
     if ((auth?.length ?? 0) === 0) {
-      return { request, sdk: null };
+      return { request, viewer: null };
     }
     return {
       request

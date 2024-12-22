@@ -1,6 +1,14 @@
 "use client";
 
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
+import dayjs from "dayjs";
+import {
   Bar,
   BarChart,
   ResponsiveContainer,
@@ -8,30 +16,27 @@ import {
   YAxis,
   Tooltip
 } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card";
 
 interface FlashcardGraphProps {
-  data: { hour: string; cards: number }[];
+  data: { date: string; count: number }[];
 }
 
 export default function FlashcardGraph({ data }: FlashcardGraphProps) {
+    const formattedData = data.map(item => ({
+    ...item,
+    hour: dayjs(item.date).format("HH:mm") 
+    }));
+  const maxY = formattedData.map((item) => item.count).reduce((a, b) => Math.max(a, b), 0);
+
   return (
-    // <Card className="bg-[#f7f3e9] border-[#8e354a] border">
     <Card className="border">
       <CardHeader>
-        {/* <CardTitle className="text-[#8e354a]">復習カード</CardTitle> */}
         <CardTitle className="">復習カード</CardTitle>
         <CardDescription>1時間ごとの復習予定カード数</CardDescription>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={350}>
-          <BarChart data={data}>
+          <BarChart data={formattedData}>
             <XAxis
               dataKey="hour"
               stroke="#8e354a"
@@ -44,7 +49,9 @@ export default function FlashcardGraph({ data }: FlashcardGraphProps) {
               fontSize={12}
               tickLine={false}
               axisLine={false}
-              tickFormatter={value => `${value}`}
+              ticks={
+                maxY < 4 ? Array.from({ length: 4 }, (_, i) => i) :
+                Array.from({ length: Math.max(maxY, 4) }, (_, i) => i === 0 ? 0 : Math.floor(maxY / i)).concat(maxY)}
             />
             <Tooltip
               contentStyle={{
@@ -53,7 +60,7 @@ export default function FlashcardGraph({ data }: FlashcardGraphProps) {
                 borderRadius: "4px"
               }}
             />
-            <Bar dataKey="cards" fill="#8e354a" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="count" fill="#8e354a" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>

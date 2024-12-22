@@ -1,0 +1,6 @@
+{
+  "language": "typescript",
+  "schema": "schema.internal.graphql",
+  "useImportTypeSyntax": false,
+  "eagerEsModules": true
+}

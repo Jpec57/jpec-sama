@@ -1,12 +1,14 @@
-import FlashcardGraph from "@/components/FlashcardGraph";
+import FlashcardGraph from "@/components/home/FlashcardGraph";
 import { Button } from "@/components/ui/button";
 import { getFlashcardReviewData } from "@/lib/mockData";
-import { createClient } from "@/utils/supabase/server";
+import { createClientFromCookies } from "@/supabase/clients/serverClient";
+import getFlashcardsPerInterval from "@/supabase/queries/getFlashcardsPerInterval";
+import dayjs from "dayjs";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function ProtectedPage() {
-  const supabase = await createClient();
+  const supabase = await createClientFromCookies();
 
   const {
     data: { user },
@@ -16,11 +18,12 @@ export default async function ProtectedPage() {
     return redirect("/sign-in");
   }
 
+  const data = await getFlashcardsPerInterval(user.id, dayjs().startOf("day").toISOString(), dayjs().endOf("day").toISOString(), 1);
   return (
     <div className="flex-1 w-full flex flex-col gap-12">
 
 
-      <FlashcardGraph data={getFlashcardReviewData()} />
+      <FlashcardGraph data={data} />
             <div className="flex justify-center">
         <Button
           asChild
