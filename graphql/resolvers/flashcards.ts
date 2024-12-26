@@ -16,14 +16,13 @@ const resolveFlashcards = async (
 
   const dataQuery = supabaseAdmin.from("flashcard").select("*");
 
+  // console.log("resolveFlashcards args", args);
   [countQuery, dataQuery].forEach((query) => {
-    console.log({ user_id: user?.id });
     if (user?.id) {
       query.eq("user_id", user.id);
     }
     if (args.availableBefore) {
       query.lte("next_available_at", args.availableBefore);
-      console.log({ availableBefore: args.availableBefore });
     }
     query.order("created_at", { ascending: args.ascending ?? false });
   });

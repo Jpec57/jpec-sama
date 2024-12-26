@@ -1,6 +1,5 @@
 import { signOutAction } from "@/app/actions";
 import Link from "next/link";
-import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { createClientFromCookies } from "@/supabase/clients/serverClient";
 

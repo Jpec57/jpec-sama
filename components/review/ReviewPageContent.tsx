@@ -95,7 +95,7 @@ const ReviewPageContent = (props: Props): JSX.Element => {
           const remainingCards = response?.sendReview?.user?.reviewCards ?? [];
           setInErrorFlashcards([]);
           setRemainingFlashcards(
-            remainingCards.edges.map(
+            remainingCards?.edges?.map(
               (edge: { node: ReviewFlashcard }) => edge!.node,
             ),
           );

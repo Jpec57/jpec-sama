@@ -1,4 +1,4 @@
-export const IS_SERVER = typeof window === typeof undefined;
+// export const IS_SERVER = typeof window === typeof undefined;
 const GRAPHQL_HTTP_ENDPOINT = `http://localhost:3000/api/graphql/internal`;
 export const CACHE_TTL = 5 * 1000; // 5 seconds, to resolve preloaded results
 

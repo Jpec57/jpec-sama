@@ -9,7 +9,7 @@ import {
   RequestParameters,
   Variables,
 } from "relay-runtime";
-import fetchGraphQL, { CACHE_TTL, IS_SERVER } from "./fetchGraphQL";
+import fetchGraphQL, { CACHE_TTL } from "./fetchGraphQL";
 
 const fetchRelay = async (
   params: RequestParameters,
@@ -37,12 +37,16 @@ const fetchRelay = async (
   return json;
 };
 
-export const responseCache: QueryResponseCache | null = IS_SERVER
-  ? null
-  : new QueryResponseCache({
-      size: 100,
-      ttl: CACHE_TTL,
-    });
+export const responseCache: QueryResponseCache | null = new QueryResponseCache({
+  size: 100,
+  ttl: CACHE_TTL,
+});
+// export const responseCache: QueryResponseCache | null = IS_SERVER
+//   ? null
+//   : new QueryResponseCache({
+//       size: 100,
+//       ttl: CACHE_TTL,
+//     });
 
 const createNetwork = () => {
   async function fetchResponse(
@@ -50,15 +54,15 @@ const createNetwork = () => {
     variables: Variables,
     cacheConfig: CacheConfig,
   ) {
-    const isQuery = params.operationKind === "query";
-    const cacheKey = params.id;
-    const forceFetch = cacheConfig && cacheConfig.force;
-    if (cacheKey && responseCache != null && isQuery && !forceFetch) {
-      const fromCache = responseCache.get(cacheKey, variables);
-      if (fromCache != null) {
-        return Promise.resolve(fromCache);
-      }
-    }
+    // const isQuery = params.operationKind === "query";
+    // const cacheKey = params.id;
+    // const forceFetch = cacheConfig && cacheConfig.force;
+    // if (cacheKey && responseCache != null && isQuery && !forceFetch) {
+    //   const fromCache = responseCache.get(cacheKey, variables);
+    //   if (fromCache != null) {
+    //     return Promise.resolve(fromCache);
+    //   }
+    // }
 
     return fetchRelay(params, variables);
   }
@@ -75,7 +79,7 @@ function createRelayEnvironment() {
   return new Environment({
     network: createNetwork(),
     store: new Store(RecordSource.create()),
-    // isServer: IS_SERVER,
+    isServer: false,
   });
 }
 
