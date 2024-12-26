@@ -17,14 +17,17 @@ export default async function ProtectedPage() {
   if (!user) {
     return redirect("/sign-in");
   }
-
-  const data = await getFlashcardsPerInterval(user.id, dayjs().startOf("day").toISOString(), dayjs().endOf("day").toISOString(), 1);
+  const now = dayjs().startOf("hour");
+  const data = await getFlashcardsPerInterval(
+    user.id,
+    now.toISOString(),
+    now.add(1, "day").toISOString(),
+    1,
+  );
   return (
     <div className="flex-1 w-full flex flex-col gap-12">
-
-
       <FlashcardGraph data={data} />
-            <div className="flex justify-center">
+      <div className="flex justify-center">
         <Button
           asChild
           className="bg-[#8e354a] hover:bg-[#b4555a] text-[#f7f3e9]"
@@ -39,7 +42,6 @@ export default async function ProtectedPage() {
           {JSON.stringify(user, null, 2)}
         </pre>
       </div>
-
     </div>
   );
 }

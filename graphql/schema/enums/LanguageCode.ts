@@ -7,8 +7,8 @@ export const LanguageCodeEnumType = builder.enumType("LanguageCode", {
     new Map(
       Object.values(LanguageCode).map((s) => [
         s,
-        { description: `${s}`, value: s }
-      ])
-    )
-  )
+        { description: `${s}`, value: s },
+      ]),
+    ),
+  ),
 });

@@ -16,10 +16,10 @@ const { handleRequest } = createYoga({
       return { request, viewer: null };
     }
     return {
-      request
+      request,
     };
   },
-  fetchAPI: { Response, Request }
+  fetchAPI: { Response, Request },
 });
 
 export async function OPTIONS() {
@@ -28,8 +28,8 @@ export async function OPTIONS() {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization"
-    }
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
   });
 }
 

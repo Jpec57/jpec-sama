@@ -1,6 +1,6 @@
 import {
   DefaultConnectionArguments,
-  resolveOffsetConnection
+  resolveOffsetConnection,
 } from "@pothos/plugin-relay";
 import { PostgrestError } from "@supabase/supabase-js";
 import type { PostgrestFilterBuilder } from "@supabase/postgrest-js";
@@ -12,10 +12,11 @@ const resolveConnection = async <T>(
     | {
         range: (
           offset: number,
-          limit: number
+          limit: number,
         ) => Promise<{ data: T[]; error: PostgrestError | null }>;
       },
-  count: number | null
+  count: number | null,
+  postQueryProcess?: (data: T[]) => T[],
 ) => {
   const connection = {
     totalCount: count ?? 0,
@@ -30,9 +31,12 @@ const resolveConnection = async <T>(
         console.error(error);
         return [];
       }
-
-      return data as unknown as T[];
-    }))
+      const typedData = data as unknown as T[];
+      if (postQueryProcess) {
+        return postQueryProcess(typedData);
+      }
+      return typedData;
+    })),
   };
   return connection;
 };

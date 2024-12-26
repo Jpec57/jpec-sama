@@ -7,7 +7,7 @@ import debugAndThrowError from "@/supabase/debugAndThrowError";
 builder.node("FlashcardAnswer", {
   description: "A Flashcard answer.",
   id: {
-    resolve: (v: FlashcardAnswer) => v.id
+    resolve: (v: FlashcardAnswer) => v.id,
   },
   loadOne: async (id: string, { viewer }) => {
     const { data, error } = await supabaseAdmin
@@ -22,17 +22,17 @@ builder.node("FlashcardAnswer", {
   fields: (t) => ({
     _id: t.string({
       resolve: (v: FlashcardAnswer) => v.id,
-      description: "The unique identifier of the flashcard answer."
+      description: "The unique identifier of the flashcard answer.",
     }),
     answer: t.string({
       resolve: (v: FlashcardAnswer) => v.answer,
       nullable: false,
-      description: "The flashcard answer."
+      description: "The flashcard answer.",
     }),
     lastUsedAt: t.string({
       resolve: (v: FlashcardAnswer) => v.last_used_at,
       nullable: true,
-      description: "When the flashcard answer has been used for the last time."
+      description: "When the flashcard answer has been used for the last time.",
     }),
     flashcard: t.field({
       type: "Flashcard",
@@ -45,7 +45,7 @@ builder.node("FlashcardAnswer", {
         return data as unknown as Flashcard;
       },
       nullable: false,
-      description: "The flashcard associated with the answer."
-    })
-  })
+      description: "The flashcard associated with the answer.",
+    }),
+  }),
 });

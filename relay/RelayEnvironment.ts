@@ -7,17 +7,17 @@ import {
   GraphQLResponse,
   QueryResponseCache,
   RequestParameters,
-  Variables
+  Variables,
 } from "relay-runtime";
 import fetchGraphQL, { CACHE_TTL, IS_SERVER } from "./fetchGraphQL";
 
 const fetchRelay = async (
   params: RequestParameters,
-  variables: Variables
+  variables: Variables,
 ): Promise<GraphQLResponse> => {
-  console.log(
-    `fetching query ${params.name} with ${JSON.stringify(variables)}`
-  );
+  // console.log(
+  //   `fetching query ${params.name} with ${JSON.stringify(variables)}`
+  // );
   const json = await fetchGraphQL(params.text, variables);
 
   // GraphQL returns exceptions (for example, a missing required variable) in the "errors"
@@ -30,8 +30,8 @@ const fetchRelay = async (
       `Error fetching GraphQL query '${
         params.name
       }' with variables '${JSON.stringify(variables)}': ${JSON.stringify(
-        json.errors
-      )}`
+        json.errors,
+      )}`,
     );
   }
   return json;
@@ -41,14 +41,14 @@ export const responseCache: QueryResponseCache | null = IS_SERVER
   ? null
   : new QueryResponseCache({
       size: 100,
-      ttl: CACHE_TTL
+      ttl: CACHE_TTL,
     });
 
 const createNetwork = () => {
   async function fetchResponse(
     params: RequestParameters,
     variables: Variables,
-    cacheConfig: CacheConfig
+    cacheConfig: CacheConfig,
   ) {
     const isQuery = params.operationKind === "query";
     const cacheKey = params.id;
@@ -75,16 +75,16 @@ function createRelayEnvironment() {
   return new Environment({
     network: createNetwork(),
     store: new Store(RecordSource.create()),
-    isServer: IS_SERVER
+    // isServer: IS_SERVER,
   });
 }
 
 export const relayEnvironment = createRelayEnvironment();
 
 export function getCurrentEnvironment(): Environment {
-  if (IS_SERVER) {
-    return createRelayEnvironment();
-  }
+  // if (IS_SERVER) {
+  //   return createRelayEnvironment();
+  // }
 
   return relayEnvironment;
 }

@@ -7,8 +7,8 @@ export const FlashcardTypeEnumType = builder.enumType("FlashcardType", {
     new Map(
       Object.values(FlashcardType).map((s) => [
         s,
-        { description: `${s}`, value: s }
-      ])
-    )
-  )
+        { description: `${s}`, value: s },
+      ]),
+    ),
+  ),
 });

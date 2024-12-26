@@ -5,7 +5,7 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from "@/components/ui/card";
 import dayjs from "dayjs";
 import {
@@ -14,7 +14,7 @@ import {
   ResponsiveContainer,
   XAxis,
   YAxis,
-  Tooltip
+  Tooltip,
 } from "recharts";
 
 interface FlashcardGraphProps {
@@ -22,11 +22,13 @@ interface FlashcardGraphProps {
 }
 
 export default function FlashcardGraph({ data }: FlashcardGraphProps) {
-    const formattedData = data.map(item => ({
+  const formattedData = data.map((item) => ({
     ...item,
-    hour: dayjs(item.date).format("HH:mm") 
-    }));
-  const maxY = formattedData.map((item) => item.count).reduce((a, b) => Math.max(a, b), 0);
+    hour: dayjs(item.date).format("HH:mm"),
+  }));
+  const maxY = formattedData
+    .map((item) => item.count)
+    .reduce((a, b) => Math.max(a, b), 0);
 
   return (
     <Card className="border">
@@ -50,14 +52,19 @@ export default function FlashcardGraph({ data }: FlashcardGraphProps) {
               tickLine={false}
               axisLine={false}
               ticks={
-                maxY < 4 ? Array.from({ length: 4 }, (_, i) => i) :
-                Array.from({ length: Math.max(maxY, 4) }, (_, i) => i === 0 ? 0 : Math.floor(maxY / i)).concat(maxY)}
+                maxY < 4
+                  ? Array.from({ length: 4 }, (_, i) => i)
+                  : Array.from({ length: Math.max(maxY, 4) }, (_, i) =>
+                      i === 0 ? 0 : Math.floor(maxY / i),
+                    ).concat(maxY)
+              }
             />
             <Tooltip
               contentStyle={{
                 background: "#f7f3e9",
+                color: "#8e354a",
                 border: "1px solid #8e354a",
-                borderRadius: "4px"
+                borderRadius: "4px",
               }}
             />
             <Bar dataKey="count" fill="#8e354a" radius={[4, 4, 0, 0]} />

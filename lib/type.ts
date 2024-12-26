@@ -1,13 +1,24 @@
-export enum FlashcardType {
-  Vocabulary = "vocabulary"
+export enum Typename {
+  Flashcard = "Flashcard",
+  FlashcardAnswer = "FlashcardAnswer",
+  ReviewedFlashcard = "ReviewedFlashcard",
+  User = "User",
 }
+export enum FlashcardType {
+  Vocabulary = "vocabulary",
+}
+
+export type GlobalID = {
+  id: string;
+  __typename: string;
+};
 
 export enum LanguageCode {
   en = "en",
   fr = "fr",
   de = "de",
   it = "it",
-  ja = "ja"
+  ja = "ja",
 }
 export enum LocaleCode {
   en_US = "en_US",
@@ -15,7 +26,7 @@ export enum LocaleCode {
   fr_CA = "fr_CA",
   de_DE = "de_DE",
   it_IT = "it_IT",
-  ja_JP = "ja_JP"
+  ja_JP = "ja_JP",
 }
 
 export type Flashcard = {
@@ -30,6 +41,21 @@ export type Flashcard = {
   source_language: LanguageCode;
   dest_language: LanguageCode;
   user_id: string;
+};
+
+export type User = {
+  id: string;
+  is_admin: boolean;
+  username: string;
+  email: string;
+  learning_locales: LocaleCode[];
+};
+
+export type ReviewedFlashcard = {
+  id: string;
+  errorCount: number;
+  nextLevel: number;
+  givenAnswer: string;
 };
 
 export type FlashcardAnswer = {

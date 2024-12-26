@@ -15,7 +15,7 @@ import fetchGraphQL from "@/relay/fetchGraphQL";
   }
 }
         `,
-    null
+    null,
   );
   console.dir({ test }, { depth: null });
 })().catch(console.error);

@@ -25,9 +25,9 @@ const nextConfig: NextConfig = {
   compiler: {
     relay: {
       src: "./",
-      language: "typescript"
-    }
-  }
+      language: "typescript",
+    },
+  },
 };
 
 export default nextConfig;
